@@ -1,0 +1,160 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#505050"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="9dp">
+
+            <TextView
+                android:id="@+id/connection_ip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Sample Printing"
+                android:textColor="#FFF"
+                android:textSize="17sp"
+                android:textStyle="normal" />
+
+            <ImageView
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_selector"
+                android:scaleType="center"
+                android:src="@drawable/ic_close"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/action_list"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="#00000000"
+            android:gravity="center"
+            android:horizontalSpacing="7dp"
+            android:numColumns="3"
+            android:verticalSpacing="7dp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#DDD" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:background="#FFF"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/icon_selector"
+                android:drawableTop="@drawable/ic_status"
+                android:gravity="center"
+                android:text="Printer\nStatus"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/icon_selector"
+                android:drawableTop="@drawable/ic_tone"
+                android:gravity="center"
+                android:text="Beep\nTone"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/test_print"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/icon_selector"
+                android:drawableTop="@drawable/ic_print"
+                android:gravity="center"
+                android:text="Test\nPrint"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/full_cut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/icon_selector"
+                android:drawableTop="@drawable/ic_fullcut"
+                android:gravity="center"
+                android:text="Full\nCut"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/partial_cut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/icon_selector"
+                android:drawableTop="@drawable/ic_partialcut"
+                android:gravity="center"
+                android:text="Partial\nCut"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rellayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/printer_reconnecting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progressBar1"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:text="Wait Printer Reconnecting.. "
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</RelativeLayout>   

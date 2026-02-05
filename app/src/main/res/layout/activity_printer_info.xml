@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#505050"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#505050"
+        android:gravity="center"
+        android:padding="9dp"
+        android:text="Printer Info"
+        android:textColor="#FFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/model"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="Printer Model"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#EEE" />
+
+    <TextView
+        android:id="@+id/serial_number"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="Serial Number"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#EEE"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/software_version"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="Software Version"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#EEE" />
+
+    <TextView
+        android:id="@+id/boot_version"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="Loader Version"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#EEE" />
+
+    <TextView
+        android:id="@+id/flash_version"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="Flash Version"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#EEE" />
+</LinearLayout>
