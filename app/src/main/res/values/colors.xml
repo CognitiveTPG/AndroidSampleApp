@@ -15,4 +15,8 @@
     <color name="color_1">#909090</color>
     <color name="color_2">#808080</color>
     <color name="color_3">#505050</color>
+
+    <color name="print_selected">#606060</color>
+    <color name="print_pressed">#707070</color>
+    <color name="print_default">#505050</color>
 </resources>

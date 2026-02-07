@@ -49,6 +49,10 @@
             android:name=".PrinterInfoActivity"
             android:theme="@style/Theme.CognitiveTPGTestSDKApp" />
 
+        <activity
+            android:name=".TextActivity"
+            android:theme="@style/Theme.CognitiveTPGTestSDKApp" />
+
 
     </application>
 

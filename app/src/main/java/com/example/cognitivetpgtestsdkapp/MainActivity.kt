@@ -72,8 +72,8 @@ class MainActivity : AppCompatActivity() {
                 var intent: Intent? = null
                 when (arg2) {
                     0 -> {
-//                        intent = Intent(this@MainActivity, TextActivity::class.java)
-//                        startActivity(intent)
+                        intent = Intent(this@MainActivity, TextActivity::class.java)
+                        startActivity(intent)
                     }
 
                     1 -> {
@@ -269,48 +269,40 @@ class MainActivity : AppCompatActivity() {
 
     private fun printQRCode() {
         try {
-            val buffer = POSPrinterIO()
-            buffer.addInitializePrinter()
-            buffer.addAlignment(POSPrinterIO.Alignment.Center)
-            buffer.addQRCode(
-                POSPrinterIO.Model.Model2,
-                5,
-                CorrectionLevelOption.Low,
-                "QR Code by CognitiveTPG".toByteArray()
-            )
-            val cmd = arrayOf<Byte?>(0x0D, 0x0A)
-            buffer.addCommand(cmd)
-            buffer.addData("For more information please visit us at:".toByteArray())
-            buffer.addCommand(cmd)
-            buffer.addData("http://www.cognitivetpg.com/gettheinsidestory".toByteArray())
-            buffer.printQRCode()
-            buffer.addFeedLine()
-            buffer.addFeedLine()
+            var buffer: PrinterIO?
 
-            sendToPrinter(buffer)
+            if (BluetoothActivity.printer is PoSPrinter) {
+                buffer = POSPrinterIO()
+                buffer.addInitializePrinter()
+                buffer.addAlignment(POSPrinterIO.Alignment.Center)
+                buffer.addQRCode(
+                    POSPrinterIO.Model.Model2,
+                    5,
+                    CorrectionLevelOption.Low,
+                    "QR Code by CognitiveTPG".toByteArray()
+                )
+                val cmd = arrayOf<Byte?>(0x0D, 0x0A)
+                buffer.addCommand(cmd)
+                buffer.addData("For more information please visit us at:".toByteArray())
+                buffer.addCommand(cmd)
+                buffer.addData("http://www.cognitivetpg.com/gettheinsidestory".toByteArray())
+                buffer.printQRCode()
+                buffer.addFeedLine()
+                buffer.addFeedLine()
+
+                sendToPrinter(buffer)
+
+
+            } else if (BluetoothActivity.printer is LabelPrinter) {
+                showToast("QR code only supported in POS printers")
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     private fun printPDF417() {
-        try {
-            val buffer = POSPrinterIO()
-            buffer.addInitializePrinter()
-            buffer.addAlignment(POSPrinterIO.Alignment.Center)
-            buffer.addBarcode(
-                216,
-                BarcodeWide.Wide_2,
-                HRI.HRI_Below,
-                BarCodeType.PDF417,
-                "CognitiveTPG".toByteArray()
-            )
-            buffer.addFeedLines(2)
-
-            sendToPrinter(buffer)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        showToast("Feature under implementation")
     }
 
     private fun sendToPrinter(buffer: PrinterIO?) {
