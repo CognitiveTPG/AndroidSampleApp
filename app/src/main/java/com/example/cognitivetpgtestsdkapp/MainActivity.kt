@@ -96,8 +96,8 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     6 -> {
-//                        intent = Intent(this@MainActivity, CommandActivity::class.java)
-//                        startActivity(intent)
+                        intent = Intent(this@MainActivity, CommandActivity::class.java)
+                        startActivity(intent)
                     }
 
                     7 -> {
