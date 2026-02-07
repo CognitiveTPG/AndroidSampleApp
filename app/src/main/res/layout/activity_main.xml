@@ -44,6 +44,7 @@
             android:id="@+id/action_list"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_weight="1"
             android:cacheColorHint="#00000000"
             android:gravity="center"
@@ -144,7 +145,6 @@
             android:layout_centerVertical="true" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/printer_reconnecting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,7 +154,8 @@
             android:layout_marginTop="5dp"
             android:text="Wait Printer Reconnecting.. "
             android:textColor="@android:color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </RelativeLayout>   

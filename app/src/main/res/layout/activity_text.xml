@@ -177,6 +177,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Sets the spacing between characters. Valid entries are 0 to 255"
                     android:minHeight="10dp"
+                    android:numeric="integer"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
 
@@ -186,6 +187,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Expands the font width. Valid entries are 0 to 4"
                     android:minHeight="10dp"
+                    android:numeric="integer"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
 
@@ -195,6 +197,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Expands the font height. Valid entries are 0 to 4"
                     android:minHeight="10dp"
+                    android:numeric="integer"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
 
@@ -204,6 +207,7 @@
                     android:layout_height="wrap_content"
                     android:hint="X position of the character string"
                     android:minHeight="10dp"
+                    android:numeric="integer"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
 
@@ -213,6 +217,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Y position of the character string"
                     android:minHeight="10dp"
+                    android:numeric="integer"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
 

@@ -53,6 +53,10 @@
             android:name=".TextActivity"
             android:theme="@style/Theme.CognitiveTPGTestSDKApp" />
 
+        <activity
+            android:name=".BarcodeActivity"
+            android:theme="@style/Theme.CognitiveTPGTestSDKApp" />
+
 
     </application>
 

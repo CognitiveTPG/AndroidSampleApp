@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         "Image",
         "Barcode",
         "QR Code",
-        "PDF417",
+        "PDF",
         "Print Sample",
         "Raw I/O",
         "Printer Info",
@@ -82,8 +82,8 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     2 -> {
-//                        intent = Intent(this@MainActivity, BarcodeActivity::class.java)
-//                        startActivity(intent)
+                        intent = Intent(this@MainActivity, BarcodeActivity::class.java)
+                        startActivity(intent)
                     }
 
                     3 -> printQRCode()
