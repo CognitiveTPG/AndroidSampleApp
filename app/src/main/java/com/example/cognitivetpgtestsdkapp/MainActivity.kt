@@ -294,7 +294,13 @@ class MainActivity : AppCompatActivity() {
 
 
             } else if (BluetoothActivity.printer is LabelPrinter) {
-                showToast("QR code only supported in POS printers")
+                buffer = LabelPrinterIO()
+                buffer.addHeader(LabelPrinterIO.Mode.ASCII, 0, 100, 250, 1)
+                buffer.addQRCode(50, 60, 3, 2, "QA,This is a QR Barcode")
+                buffer.addIndex()
+                buffer.addEnd()
+                sendToPrinter(buffer)
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
