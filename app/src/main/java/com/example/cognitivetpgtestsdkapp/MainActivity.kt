@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         "Barcode",
         "QR Code",
         "PDF",
-        "Print Sample",
         "Raw I/O",
         "Printer Info",
         "File Print"
@@ -47,7 +46,6 @@ class MainActivity : AppCompatActivity() {
         R.drawable.icon_barcode,
         R.drawable.icon_qrcode,
         R.drawable.icon_pdf417,
-        R.drawable.icon_receipt,
         R.drawable.icon_raw,
         R.drawable.icon_info,
         R.drawable.icon_file
@@ -77,8 +75,8 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     1 -> {
-//                        intent = Intent(this@MainActivity, ImageActivity::class.java)
-//                        startActivity(intent)
+                        intent = Intent(this@MainActivity, ImageActivity::class.java)
+                        startActivity(intent)
                     }
 
                     2 -> {
@@ -91,21 +89,16 @@ class MainActivity : AppCompatActivity() {
                     4 -> printPDF417()
 
                     5 -> {
-//                        intent = Intent(this@MainActivity, ReceiptActivity::class.java)
-//                        startActivity(intent)
-                    }
-
-                    6 -> {
                         intent = Intent(this@MainActivity, CommandActivity::class.java)
                         startActivity(intent)
                     }
 
-                    7 -> {
+                    6 -> {
                         intent = Intent(this@MainActivity, PrinterInfoActivity::class.java)
                         startActivity(intent)
                     }
 
-                    8 -> {
+                    7 -> {
 //                        intent = Intent(this@MainActivity, FileActivity::class.java)
 //                        startActivity(intent)
                     }
