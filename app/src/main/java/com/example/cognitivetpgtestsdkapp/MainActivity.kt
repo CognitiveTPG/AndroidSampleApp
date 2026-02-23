@@ -308,7 +308,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun printPDF417() {
-        showToast("Feature under implementation")
+        try {
+            var buffer: PrinterIO?
+
+            if (BluetoothActivity.printer is PoSPrinter) {
+                buffer = POSPrinterIO()
+                buffer.addInitializePrinter()
+                buffer.addAlignment(POSPrinterIO.Alignment.Center)
+                buffer.addBarcode(
+                    216,
+                    BarcodeWide.Wide_2,
+                    HRI.HRI_Below,
+                    BarCodeType.PDF417,
+                    "CognitiveTPG".toByteArray()
+                )
+                buffer.addFeedLines(2)
+
+                sendToPrinter(buffer)
+
+
+            } else if (BluetoothActivity.printer is LabelPrinter) {
+                buffer = LabelPrinterIO()
+                buffer.addHeader(LabelPrinterIO.Mode.ASCII, 0, 100, 600, 1)
+                buffer.addPDF417(
+                    50,
+                    10,
+                    2,
+                    6,
+                    1,
+                    0,
+                    7,
+                    53,
+                    "NAME:JOHN SMITH ADDRESS:116 WILBUR BOHEMIA, NY 11716"
+                )
+                buffer.addEnd()
+                sendToPrinter(buffer)
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun sendToPrinter(buffer: PrinterIO?) {
