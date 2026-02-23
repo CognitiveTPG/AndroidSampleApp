@@ -99,8 +99,8 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     7 -> {
-//                        intent = Intent(this@MainActivity, FileActivity::class.java)
-//                        startActivity(intent)
+                        intent = Intent(this@MainActivity, FileActivity::class.java)
+                        startActivity(intent)
                     }
                 }
             }

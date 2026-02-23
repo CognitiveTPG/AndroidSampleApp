@@ -65,6 +65,10 @@
             android:name=".ImageActivity"
             android:theme="@style/Theme.CognitiveTPGTestSDKApp" />
 
+        <activity
+            android:name=".FileActivity"
+            android:theme="@style/Theme.CognitiveTPGTestSDKApp" />
+
 
     </application>
 
