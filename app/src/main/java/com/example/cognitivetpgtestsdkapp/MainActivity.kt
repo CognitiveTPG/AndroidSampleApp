@@ -32,17 +32,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
     private val label = arrayOf<String?>(
         "Text",
-        "Image",
         "Barcode",
         "QR Code",
-        "PDF",
+        "PDF417",
         "Raw I/O",
         "Printer Info",
         "File Print"
     )
     private val icon = intArrayOf(
         R.drawable.icon_text,
-        R.drawable.icon_image,
+//        R.drawable.icon_image,
         R.drawable.icon_barcode,
         R.drawable.icon_qrcode,
         R.drawable.icon_pdf417,
@@ -74,31 +73,34 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
 
-                    1 -> {
-                        intent = Intent(this@MainActivity, ImageActivity::class.java)
-                        startActivity(intent)
-                    }
+//                    1 -> {
+//                        intent = Intent(this@MainActivity, ImageActivity::class.java)
+//                        startActivity(intent)
+//                    }
 
-                    2 -> {
+                    1 -> {
                         intent = Intent(this@MainActivity, BarcodeActivity::class.java)
                         startActivity(intent)
                     }
 
-                    3 -> printQRCode()
+                    2 -> {
+                        intent = Intent(this@MainActivity, QrCodeActivity::class.java)
+                        startActivity(intent)
+                    }
 
-                    4 -> printPDF417()
+                    3 -> printPDF417()
 
-                    5 -> {
+                    4 -> {
                         intent = Intent(this@MainActivity, CommandActivity::class.java)
                         startActivity(intent)
                     }
 
-                    6 -> {
+                    5 -> {
                         intent = Intent(this@MainActivity, PrinterInfoActivity::class.java)
                         startActivity(intent)
                     }
 
-                    7 -> {
+                    6 -> {
                         intent = Intent(this@MainActivity, FileActivity::class.java)
                         startActivity(intent)
                     }
@@ -257,46 +259,6 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
                 showToast("Failed to Print")
             }
-        }
-    }
-
-    private fun printQRCode() {
-        try {
-            var buffer: PrinterIO?
-
-            if (BluetoothActivity.printer is PoSPrinter) {
-                buffer = POSPrinterIO()
-                buffer.addInitializePrinter()
-                buffer.addAlignment(POSPrinterIO.Alignment.Center)
-                buffer.addQRCode(
-                    POSPrinterIO.Model.Model2,
-                    5,
-                    CorrectionLevelOption.Low,
-                    "QR Code by CognitiveTPG".toByteArray()
-                )
-                val cmd = arrayOf<Byte?>(0x0D, 0x0A)
-                buffer.addCommand(cmd)
-                buffer.addData("For more information please visit us at:".toByteArray())
-                buffer.addCommand(cmd)
-                buffer.addData("http://www.cognitivetpg.com/gettheinsidestory".toByteArray())
-                buffer.printQRCode()
-                buffer.addFeedLine()
-                buffer.addFeedLine()
-
-                sendToPrinter(buffer)
-
-
-            } else if (BluetoothActivity.printer is LabelPrinter) {
-                buffer = LabelPrinterIO()
-                buffer.addHeader(LabelPrinterIO.Mode.ASCII, 0, 100, 250, 1)
-                buffer.addQRCode(50, 60, 3, 2, "QA,This is a QR Barcode")
-                buffer.addIndex()
-                buffer.addEnd()
-                sendToPrinter(buffer)
-
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 

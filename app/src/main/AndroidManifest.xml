@@ -69,6 +69,10 @@
             android:name=".FileActivity"
             android:theme="@style/Theme.CognitiveTPGTestSDKApp" />
 
+        <activity
+            android:name=".QrCodeActivity"
+            android:theme="@style/Theme.CognitiveTPGTestSDKApp" />
+
 
     </application>
 
