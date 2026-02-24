@@ -50,7 +50,8 @@ class BarcodeActivity : AppCompatActivity() {
                     "Code128",
                     "CODABAR",
                     "CodeEAN128",
-                    "ITF"
+                    "ITF",
+                    "PDF417"
                 )
             )
             selectBarcode.setAdapter(ad)
@@ -234,6 +235,9 @@ class BarcodeActivity : AppCompatActivity() {
             }
             if (position == 9) {
                 return BarCodeType.ITF
+            }
+            if (position == 10) {
+                return BarCodeType.PDF417
             }
             return BarCodeType.Code_39
         }

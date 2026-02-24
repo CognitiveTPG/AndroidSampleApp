@@ -73,6 +73,10 @@
             android:name=".QrCodeActivity"
             android:theme="@style/Theme.CognitiveTPGTestSDKApp" />
 
+        <activity
+            android:name=".BarcodePdfActivity"
+            android:theme="@style/Theme.CognitiveTPGTestSDKApp" />
+
 
     </application>
 

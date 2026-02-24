@@ -2,6 +2,7 @@ package com.example.cognitivetpgtestsdkapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Range
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
@@ -30,24 +31,24 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
-    private val label = arrayOf<String?>(
+    private var label = arrayOf<String?>(
         "Text",
         "Barcode",
         "QR Code",
-        "PDF417",
         "Raw I/O",
         "Printer Info",
-        "File Print"
+        "File Print",
+        "PDF417",
     )
     private val icon = intArrayOf(
         R.drawable.icon_text,
 //        R.drawable.icon_image,
         R.drawable.icon_barcode,
         R.drawable.icon_qrcode,
-        R.drawable.icon_pdf417,
         R.drawable.icon_raw,
         R.drawable.icon_info,
-        R.drawable.icon_file
+        R.drawable.icon_file,
+        R.drawable.icon_pdf417,
     )
 
     private var adapter: GridAdapter? = null
@@ -59,6 +60,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
 
         mBinding.rellayout.visibility = View.GONE
+
+        if (BluetoothActivity.printer is PoSPrinter) {
+            label = label.sliceArray(IntRange(0, label.size - 2))
+        }
 
         adapter = GridAdapter()
         mBinding.actionList.setAdapter(adapter)
@@ -88,20 +93,23 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
 
-                    3 -> printPDF417()
-
-                    4 -> {
+                    3 -> {
                         intent = Intent(this@MainActivity, CommandActivity::class.java)
                         startActivity(intent)
                     }
 
-                    5 -> {
+                    4 -> {
                         intent = Intent(this@MainActivity, PrinterInfoActivity::class.java)
                         startActivity(intent)
                     }
 
-                    6 -> {
+                    5 -> {
                         intent = Intent(this@MainActivity, FileActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                    6 -> {
+                        intent = Intent(this@MainActivity, BarcodePdfActivity::class.java)
                         startActivity(intent)
                     }
                 }
@@ -259,49 +267,6 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
                 showToast("Failed to Print")
             }
-        }
-    }
-
-    private fun printPDF417() {
-        try {
-            var buffer: PrinterIO?
-
-            if (BluetoothActivity.printer is PoSPrinter) {
-                buffer = POSPrinterIO()
-                buffer.addInitializePrinter()
-                buffer.addAlignment(POSPrinterIO.Alignment.Center)
-                buffer.addBarcode(
-                    216,
-                    BarcodeWide.Wide_2,
-                    HRI.HRI_Below,
-                    BarCodeType.PDF417,
-                    "CognitiveTPG".toByteArray()
-                )
-                buffer.addFeedLines(2)
-
-                sendToPrinter(buffer)
-
-
-            } else if (BluetoothActivity.printer is LabelPrinter) {
-                buffer = LabelPrinterIO()
-                buffer.addHeader(LabelPrinterIO.Mode.ASCII, 0, 100, 600, 1)
-                buffer.addPDF417(
-                    50,
-                    10,
-                    2,
-                    6,
-                    1,
-                    0,
-                    7,
-                    53,
-                    "NAME:JOHN SMITH ADDRESS:116 WILBUR BOHEMIA, NY 11716"
-                )
-                buffer.addEnd()
-                sendToPrinter(buffer)
-
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 

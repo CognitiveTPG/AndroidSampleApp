@@ -1,0 +1,159 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#505050"
+    android:fitsSystemWindows="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#505050"
+        android:gravity="center"
+        android:padding="9dp"
+        android:text="Barcode Printing"
+        android:textColor="#FFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutLabelOptions"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+
+                <EditText
+                    android:id="@+id/text_x"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:hint="X starting position for bar code block."
+                    android:minHeight="10dp"
+                    android:numeric="integer"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/text_y"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:hint="Y starting position for bar code block"
+                    android:minHeight="10dp"
+                    android:numeric="integer"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/width_barcode"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:hint="Width in the bar code"
+                    android:numeric="integer"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/height_barcode"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:hint="Height in the bar code"
+                    android:numeric="integer"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/error_barcode"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:hint="Error correction level; 0 through 8."
+                    android:numeric="integer"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#505050"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:text="Entering 0 will cause the printer to calculate the number of rows."
+                    android:textColor="#FFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/rows_barcode"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:hint="Number of bar code rows, from 3 to 90."
+                    android:numeric="integer"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#505050"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:text="Entering 0 will cause the printer to calculate the number of columns."
+                    android:textColor="#FFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/columns_barcode"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:hint="Number of bar code columns, from 1 to 30."
+                    android:numeric="integer"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/barcode_data"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:hint="Enter barcode data" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/print_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/printer_btn_selector"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_printer"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text=" Print  "
+            android:textColor="#EEE"
+            android:textStyle="bold" />
+    </FrameLayout>
+</LinearLayout>
