@@ -89,6 +89,10 @@ class CommandActivity : AppCompatActivity() {
 
                 }
             })
+
+            btnBack.setOnClickListener {
+                finish()
+            }
         }
 
 

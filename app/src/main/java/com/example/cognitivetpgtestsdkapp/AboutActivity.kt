@@ -14,5 +14,9 @@ class AboutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
+        mBinding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 }

@@ -136,6 +136,10 @@ class QrCodeActivity : AppCompatActivity() {
                 }
             })
 
+            btnBack.setOnClickListener {
+                finish()
+            }
+
         }
 
     }

@@ -268,6 +268,10 @@ class MainActivity : AppCompatActivity() {
                 showToast("Failed to Print")
             }
         }
+
+        mBinding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun sendToPrinter(buffer: PrinterIO?) {

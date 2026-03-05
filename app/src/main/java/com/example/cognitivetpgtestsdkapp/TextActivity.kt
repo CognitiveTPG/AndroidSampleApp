@@ -251,6 +251,10 @@ class TextActivity : AppCompatActivity() {
                 }
             }
         }
+
+        mBinding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun getFontSize(): LabelPrinterIO.FontID {

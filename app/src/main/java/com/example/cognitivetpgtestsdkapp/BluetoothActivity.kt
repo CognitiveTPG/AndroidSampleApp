@@ -59,10 +59,6 @@ class BluetoothActivity : AppCompatActivity(), ConnectionListener {
         BluetoothAdapter.getDefaultAdapter()
     }
 
-    private var socket: BluetoothSocket? = null
-    private var inStream: InputStream? = null
-    private var outStream: OutputStream? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -181,6 +177,10 @@ class BluetoothActivity : AppCompatActivity(), ConnectionListener {
                 }
             }
         })
+
+        mBinding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun checkAndRequestBluetoothPermissions() {

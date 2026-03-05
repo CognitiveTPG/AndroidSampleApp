@@ -62,6 +62,10 @@ class FileActivity : AppCompatActivity() {
             printButton.setOnClickListener {
                 sendFile()
             }
+
+            btnBack.setOnClickListener {
+                finish()
+            }
         }
 
 

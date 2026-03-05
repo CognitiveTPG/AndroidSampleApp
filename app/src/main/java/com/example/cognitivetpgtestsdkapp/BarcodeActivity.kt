@@ -167,6 +167,9 @@ class BarcodeActivity : AppCompatActivity() {
                 }
             })
 
+            btnBack.setOnClickListener {
+                finish()
+            }
         }
 
     }

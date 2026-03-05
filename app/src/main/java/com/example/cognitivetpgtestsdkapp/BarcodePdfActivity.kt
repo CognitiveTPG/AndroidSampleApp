@@ -91,6 +91,10 @@ class BarcodePdfActivity : AppCompatActivity() {
                 }
             })
 
+            btnBack.setOnClickListener {
+                finish()
+            }
+
         }
 
     }

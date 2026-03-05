@@ -27,6 +27,10 @@ class PrinterInfoActivity : AppCompatActivity() {
         setContentView(mBinding.root)
 
         getPrinterDetails()
+
+        mBinding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun getPrinterDetails() {
