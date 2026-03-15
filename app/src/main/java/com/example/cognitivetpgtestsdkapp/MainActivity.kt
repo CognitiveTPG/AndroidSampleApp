@@ -25,6 +25,7 @@ import com.cognitive.status.PrinterStatus
 import com.example.cognitivetpgtestsdkapp.databinding.ActivityMainBinding
 import com.example.cognitivetpgtestsdkapp.utility.showToast
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -149,7 +150,10 @@ class MainActivity : AppCompatActivity() {
                         } else if (BluetoothActivity.printer is LabelPrinter) {
 
                             withContext(Dispatchers.Main) {
+                                mBinding.rellayout.visibility = View.VISIBLE
+                                delay(1000)
                                 showToast("Status is: ${(BluetoothActivity.printer as LabelPrinter).printerStatus.statusMessage}")
+                                mBinding.rellayout.visibility = View.GONE
                             }
                         }
                     }
