@@ -40,16 +40,17 @@ class MainActivity : AppCompatActivity() {
         "Printer Info",
         "File Print",
         "PDF417\nBarcode",
+        "Image\nPrint"
     )
     private val icon = intArrayOf(
         R.drawable.icon_text,
-//        R.drawable.icon_image,
         R.drawable.icon_barcode,
         R.drawable.icon_qrcode,
         R.drawable.icon_raw,
         R.drawable.icon_info,
         R.drawable.icon_file,
         R.drawable.icon_barcode,
+        R.drawable.icon_image,
     )
 
     private var adapter: GridAdapter? = null
@@ -79,11 +80,6 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
 
-//                    1 -> {
-//                        intent = Intent(this@MainActivity, ImageActivity::class.java)
-//                        startActivity(intent)
-//                    }
-
                     1 -> {
                         intent = Intent(this@MainActivity, BarcodeActivity::class.java)
                         startActivity(intent)
@@ -111,6 +107,11 @@ class MainActivity : AppCompatActivity() {
 
                     6 -> {
                         intent = Intent(this@MainActivity, BarcodePdfActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                    7 -> {
+                        intent = Intent(this@MainActivity, ImageActivity::class.java)
                         startActivity(intent)
                     }
                 }

@@ -1,10 +1,12 @@
 package com.example.cognitivetpgtestsdkapp
 
-import android.content.Context
-import android.graphics.BitmapFactory
+import android.app.ProgressDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Base64
+import android.provider.OpenableColumns
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.cognitive.printer.LabelPrinter
@@ -12,7 +14,6 @@ import com.cognitive.printer.PoSPrinter
 import com.cognitive.printer.io.LabelPrinterIO
 import com.cognitive.printer.io.POSPrinterIO
 import com.cognitive.printer.io.PrinterIO
-import com.cognitive.util.BitmapConvertor
 import com.example.cognitivetpgtestsdkapp.databinding.ActivityImageBinding
 import com.example.cognitivetpgtestsdkapp.utility.showToast
 import kotlinx.coroutines.Dispatchers
@@ -21,97 +22,279 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ImageActivity : AppCompatActivity() {
+    private var barProgressDialog: ProgressDialog? = null
+
+    private var selectedUri: Uri? = null
     private lateinit var mBinding: ActivityImageBinding
+
+    private var mStringFileType = ""
+
+
+    private val filePickerLauncher =
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+            uri?.let { handleSelectedFile(it) }
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         mBinding = ActivityImageBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-
         mBinding.apply {
+            btnSelectFile.setOnClickListener {
+                openFilePicker()
+            }
 
-            if (BluetoothActivity.printer is LabelPrinter) {
-                linearLayoutLabelOptions.visibility = View.VISIBLE
+            btnClose.setOnClickListener {
+                clearSelection()
             }
 
             printButton.setOnClickListener {
-                try {
+                sendFile()
+            }
 
-                    var buffer: PrinterIO?
-                    val image: ByteArray =
-                        readByteArrayFromRaw(this@ImageActivity, R.raw.test_simple)
-                    val base64 = byteArrayToBase64(image)
-
-                    if (BluetoothActivity.printer is PoSPrinter) {
-                        buffer = POSPrinterIO()
-                        buffer.addInitializePrinter()
-                        buffer.addAlignment(POSPrinterIO.Alignment.Center)
-                        buffer.addLogo(image)
-
-                        sendToPrinter(buffer)
-
-                        Thread.sleep(100L)
-
-                        buffer.clearBuffer()
-                        buffer.printLogo(POSPrinterIO.PrintMode.Normal)
-
-                        sendToPrinter(buffer)
-                    } else if (BluetoothActivity.printer is LabelPrinter) {
-
-                        lifecycleScope.launch {
-
-                            withContext(Dispatchers.Main) {
-                                mBinding.rellayout.visibility = View.VISIBLE
-                            }
-
-                            var buffer = LabelPrinterIO()
-                            buffer.addHeader(LabelPrinterIO.Mode.ASCII, 0, 100, 600, 0)
-                            buffer.addGraphic(
-                                LabelPrinterIO.GraphicType.PCX,
-                                if (mBinding.textX.getText().toString().trim()
-                                        .isEmpty()
-                                ) 0 else mBinding.textX.getText().toString().trim().toInt(),
-                                if (mBinding.textY.getText().toString().trim()
-                                        .isEmpty()
-                                ) 0 else mBinding.textY.getText().toString().trim().toInt(),
-                            )
-                            sendToPrinter(buffer)
-
-                            delay(500)
-
-                            buffer = LabelPrinterIO()
-                            buffer.addGraphicData(image)
-                            sendToPrinter(buffer)
-
-                            showToast("File Sent To Print")
-
-                            delay(500)
-
-
-                            buffer = LabelPrinterIO()
-                            buffer.addHeader(LabelPrinterIO.Mode.REUSE, 0, 100, 590, 1)
-                            buffer.addEnd()
-                            sendToPrinter(buffer)
-
-                            delay(1000)
-
-                            withContext(Dispatchers.Main) {
-                                mBinding.rellayout.visibility = View.GONE
-                            }
-                        }
-                    }
-
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    showToast("Failed to Print")
-                    mBinding.rellayout.visibility = View.VISIBLE
-                }
+            btnBack.setOnClickListener {
+                finish()
             }
         }
 
 
+    }
+
+    private fun openFilePicker() {
+        filePickerLauncher.launch(arrayOf("*/*"))
+    }
+
+    private fun handleSelectedFile(uri: Uri) {
+        val fileName = getFileName(uri) ?: return
+
+        if (!isValidFile(fileName)) {
+            showToast("Invalid Image Type!")
+            return
+        }
+
+        mStringFileType = getFileType(fileName)
+
+        selectedUri = uri
+
+        // Persist permission (important)
+        contentResolver.takePersistableUriPermission(
+            uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+
+        showSelectedUI(fileName)
+
+        val fileBytes = uriToByteArray(uri)
+
+        if (fileBytes != null) {
+            showToast("Image size: ${fileBytes.size} bytes")
+        } else {
+            showToast("Failed to read image file")
+        }
+    }
+
+    private fun isValidFile(name: String): Boolean {
+        val lower = name.lowercase()
+        return lower.endsWith(".bmp") || lower.endsWith(".pcx")
+    }
+
+    private fun getFileType(name: String): String {
+        val lower = name.lowercase()
+
+        if (lower.endsWith(".bmp")) {
+            return "bmp"
+        } else if (lower.endsWith(".pcx")) {
+            return "pcx"
+        }
+        return ""
+    }
+
+    private fun getFileName(uri: Uri): String? {
+        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+            val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            if (cursor.moveToFirst()) {
+                return cursor.getString(index)
+            }
+        }
+        return null
+    }
+
+    private fun showSelectedUI(fileName: String) {
+        mBinding.apply {
+            btnSelectFile.visibility = View.GONE
+            layoutSelected.visibility = View.VISIBLE
+            txtFileName.text = fileName
+            printButton.visibility = View.VISIBLE
+        }
+
+    }
+
+    private fun clearSelection() {
+        mBinding.apply {
+            selectedUri = null
+            layoutSelected.visibility = View.GONE
+            btnSelectFile.visibility = View.VISIBLE
+            printButton.visibility = View.GONE
+        }
+
+    }
+
+    private fun showProgress() {
+        mBinding.apply {
+            barProgressDialog =
+                ProgressDialog.show(this@ImageActivity, "Image Browser", "Loading...")
+            barProgressDialog?.setCancelable(false)
+        }
+
+    }
+
+    private fun hideProgress() {
+        barProgressDialog?.dismiss()
+    }
+
+    private fun uriToByteArray(uri: Uri): ByteArray? {
+        return try {
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                inputStream.readBytes()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    fun getImageHeight(bytes: ByteArray): Int? {
+        if (bytes.size < 2) return null
+
+        // BMP starts with "BM"
+        if (bytes[0] == 0x42.toByte() && bytes[1] == 0x4D.toByte()) {
+            return getBmpHeight(bytes)
+        }
+
+        // PCX starts with 0x0A
+        if (bytes[0] == 0x0A.toByte()) {
+            return getPcxHeight(bytes)
+        }
+
+        return null
+    }
+
+    fun getPcxHeight(bytes: ByteArray): Int? {
+        if (bytes.size < 12) return null
+        if (bytes[0] != 0x0A.toByte()) return null // PCX signature
+
+        val buffer = java.nio.ByteBuffer
+            .wrap(bytes)
+            .order(java.nio.ByteOrder.LITTLE_ENDIAN)
+
+        val ymin = buffer.getShort(6).toInt() and 0xFFFF
+        val ymax = buffer.getShort(10).toInt() and 0xFFFF
+
+        if (ymax < ymin) return null
+
+        return ymax - ymin + 1
+    }
+
+    fun getBmpHeight(bytes: ByteArray): Int? {
+        if (bytes.size < 26) return null
+        if (bytes[0] != 0x42.toByte() || bytes[1] != 0x4D.toByte()) return null // "BM"
+
+        val buffer = java.nio.ByteBuffer
+            .wrap(bytes, 22, 4)
+            .order(java.nio.ByteOrder.LITTLE_ENDIAN)
+
+        val height = buffer.int
+
+        return kotlin.math.abs(height)
+    }
+
+    private fun sendFile() {
+        try {
+            var buffer: PrinterIO?
+            val bytes = selectedUri?.let { uriToByteArray(it) }
+
+
+
+            if (BluetoothActivity.printer is PoSPrinter) {
+
+                if (mStringFileType == "pcx" || mStringFileType == "bmp") {
+                    buffer = POSPrinterIO()
+                    buffer.addInitializePrinter()
+                    buffer.addAlignment(POSPrinterIO.Alignment.Center)
+                    buffer.addLogo(bytes)
+
+                    sendToPrinter(buffer)
+
+                    Thread.sleep(100L)
+
+                    buffer.clearBuffer()
+                    buffer.printLogo(POSPrinterIO.PrintMode.Normal)
+                    sendToPrinter(buffer)
+                }
+
+
+            } else if (BluetoothActivity.printer is LabelPrinter) {
+
+                lifecycleScope.launch {
+
+                    withContext(Dispatchers.Main) {
+                        showProgress()
+                    }
+
+                    var buffer = LabelPrinterIO()
+
+                    buffer.addHeader(
+                        LabelPrinterIO.Mode.ASCII,
+                        0,
+                        100,
+                        getImageHeight(bytes ?: byteArrayOf()) ?: 600,
+                        0
+                    )
+                    buffer.addGraphic(
+                        if (mStringFileType == "pcx") LabelPrinterIO.GraphicType.PCX else LabelPrinterIO.GraphicType.BMP,
+                        0,
+                        0,
+                    )
+                    sendToPrinter(buffer)
+
+                    delay(500)
+
+                    buffer = LabelPrinterIO()
+                    buffer.addGraphicData(bytes)
+                    sendToPrinter(buffer)
+
+                    delay(500)
+
+
+                    buffer = LabelPrinterIO()
+                    buffer.addHeader(
+                        LabelPrinterIO.Mode.REUSE,
+                        0,
+                        100,
+                        getImageHeight(bytes ?: byteArrayOf()) ?: 600,
+                        1
+                    )
+                    buffer.addEnd()
+                    sendToPrinter(buffer)
+
+
+
+                    delay(1000)
+
+                    withContext(Dispatchers.Main) {
+                        hideProgress()
+                    }
+                }
+            }
+
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            showToast("Failed to Print")
+            hideProgress()
+        }
     }
 
     private fun sendToPrinter(buffer: PrinterIO?) {
@@ -130,14 +313,4 @@ class ImageActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun readByteArrayFromRaw(context: Context, resId: Int): ByteArray {
-        return context.resources.openRawResource(resId).use { input ->
-            input.readBytes()
-        }
-    }
-
-    fun byteArrayToBase64(bytes: ByteArray): String {
-        return Base64.encodeToString(bytes, Base64.NO_WRAP)
-    }
 }

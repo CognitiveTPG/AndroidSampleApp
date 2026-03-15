@@ -1,71 +1,89 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#505050"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:background="#DDD"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtViewHeader"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:background="#505050"
-        android:gravity="center"
-        android:padding="9dp"
-        android:text="Image Printing"
-        android:textColor="#FFF"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayoutLabelOptions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtViewHeader"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <EditText
-            android:id="@+id/text_x"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            android:hint="X position of the Barcode"
-            android:minHeight="10dp"
-            android:numeric="integer"
-            android:singleLine="true" />
-
-        <EditText
-            android:id="@+id/text_y"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            android:hint="Y position of the Barcode"
-            android:minHeight="10dp"
-            android:numeric="integer"
-            android:singleLine="true" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+            android:background="#505050"
+            android:gravity="center"
+            android:text="Image Printing"
+            android:textColor="#FFF"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/baseline_arrow_back_24" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+
+        <Button
+            android:id="@+id/btnSelectFile"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="9dp"
-            android:scaleType="center"
-            android:src="@drawable/logo" />
+            android:text="Select BMP/PCX File" />
+
+
+        <LinearLayout
+            android:id="@+id/layoutSelected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtFileName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:tint="@android:color/holo_red_light" />
+        </LinearLayout>
 
     </LinearLayout>
 
+
     <LinearLayout
-        android:id="@+id/print_button"
+        android:id="@+id/printButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -92,34 +110,4 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/rellayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#99000000"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <ProgressBar
-            android:id="@+id/progressBar1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:id="@+id/printer_reconnecting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBar1"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="5dp"
-            android:text="Wait Printer Reconnecting.. "
-            android:textColor="@android:color/white"
-            android:textSize="15sp"
-            android:visibility="gone" />
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>
