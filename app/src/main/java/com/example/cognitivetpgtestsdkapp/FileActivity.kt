@@ -35,8 +35,6 @@ class FileActivity : AppCompatActivity() {
     private var selectedUri: Uri? = null
     private lateinit var mBinding: ActivityFilePrintingBinding
 
-    private var mStringFileType = ""
-
 
     private val filePickerLauncher =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
@@ -83,8 +81,6 @@ class FileActivity : AppCompatActivity() {
             return
         }
 
-        mStringFileType = getFileType(fileName)
-
         selectedUri = uri
 
         // Persist permission (important)
@@ -105,20 +101,7 @@ class FileActivity : AppCompatActivity() {
 
     private fun isValidFile(name: String): Boolean {
         val lower = name.lowercase()
-        return lower.endsWith(".bin") || lower.endsWith(".bmp") || lower.endsWith(".pcx")
-    }
-
-    private fun getFileType(name: String): String {
-        val lower = name.lowercase()
-
-        if (lower.endsWith(".bin")) {
-            return "bin"
-        } else if (lower.endsWith(".bmp")) {
-            return "bmp"
-        } else if (lower.endsWith(".pcx")) {
-            return "pcx"
-        }
-        return ""
+        return lower.endsWith(".bin") || lower.endsWith(".txt")
     }
 
     private fun getFileName(uri: Uri): String? {
@@ -147,6 +130,7 @@ class FileActivity : AppCompatActivity() {
             layoutSelected.visibility = View.GONE
             btnSelectFile.visibility = View.VISIBLE
             printButton.visibility = View.GONE
+            printerResponse.text = ""
         }
 
     }
@@ -174,51 +158,6 @@ class FileActivity : AppCompatActivity() {
         }
     }
 
-    fun getImageHeight(bytes: ByteArray): Int? {
-        if (bytes.size < 2) return null
-
-        // BMP starts with "BM"
-        if (bytes[0] == 0x42.toByte() && bytes[1] == 0x4D.toByte()) {
-            return getBmpHeight(bytes)
-        }
-
-        // PCX starts with 0x0A
-        if (bytes[0] == 0x0A.toByte()) {
-            return getPcxHeight(bytes)
-        }
-
-        return null
-    }
-
-    fun getPcxHeight(bytes: ByteArray): Int? {
-        if (bytes.size < 12) return null
-        if (bytes[0] != 0x0A.toByte()) return null // PCX signature
-
-        val buffer = java.nio.ByteBuffer
-            .wrap(bytes)
-            .order(java.nio.ByteOrder.LITTLE_ENDIAN)
-
-        val ymin = buffer.getShort(6).toInt() and 0xFFFF
-        val ymax = buffer.getShort(10).toInt() and 0xFFFF
-
-        if (ymax < ymin) return null
-
-        return ymax - ymin + 1
-    }
-
-    fun getBmpHeight(bytes: ByteArray): Int? {
-        if (bytes.size < 26) return null
-        if (bytes[0] != 0x42.toByte() || bytes[1] != 0x4D.toByte()) return null // "BM"
-
-        val buffer = java.nio.ByteBuffer
-            .wrap(bytes, 22, 4)
-            .order(java.nio.ByteOrder.LITTLE_ENDIAN)
-
-        val height = buffer.int
-
-        return kotlin.math.abs(height)
-    }
-
     private fun sendFile() {
         try {
             var buffer: PrinterIO?
@@ -227,26 +166,10 @@ class FileActivity : AppCompatActivity() {
 
 
             if (BluetoothActivity.printer is PoSPrinter) {
-
-                if (mStringFileType == "bin") {
-                    buffer = POSPrinterIO()
-                    buffer.addResetPrinter()
-                    buffer.addBinaryData(bytes)
-                    sendToPrinter(buffer)
-                } else if (mStringFileType == "pcx" || mStringFileType == "bmp") {
-                    buffer = POSPrinterIO()
-                    buffer.addInitializePrinter()
-                    buffer.addAlignment(POSPrinterIO.Alignment.Center)
-                    buffer.addLogo(bytes)
-
-                    sendToPrinter(buffer)
-
-                    Thread.sleep(100L)
-
-                    buffer.clearBuffer()
-                    buffer.printLogo(POSPrinterIO.PrintMode.Normal)
-                    sendToPrinter(buffer)
-                }
+                buffer = POSPrinterIO()
+                buffer.addResetPrinter()
+                buffer.addBinaryData(bytes)
+                sendToPrinter(buffer)
 
 
             } else if (BluetoothActivity.printer is LabelPrinter) {
@@ -257,53 +180,19 @@ class FileActivity : AppCompatActivity() {
                         showProgress()
                     }
 
-                    var buffer = LabelPrinterIO()
+                    var data = bytes
+                    BluetoothActivity.connection?.writeData(data, 0, data?.size ?: 0)
+                    delay(2000)
 
-                    if (mStringFileType == "bin") {
-                        buffer.addBinaryData(bytes)
-                        sendToPrinter(buffer)
-                    } else {
-                        buffer.addHeader(
-                            LabelPrinterIO.Mode.ASCII,
-                            0,
-                            100,
-                            getImageHeight(bytes ?: byteArrayOf()) ?: 600,
-                            0
-                        )
-                        buffer.addGraphic(
-                            if (mStringFileType == "pcx") LabelPrinterIO.GraphicType.PCX else LabelPrinterIO.GraphicType.BMP,
-                            0,
-                            0,
-                        )
-                        sendToPrinter(buffer)
-
-                        delay(500)
-
-                        buffer = LabelPrinterIO()
-                        buffer.addGraphicData(bytes)
-                        sendToPrinter(buffer)
-
-                        delay(500)
-
-
-                        buffer = LabelPrinterIO()
-                        buffer.addHeader(
-                            LabelPrinterIO.Mode.REUSE,
-                            0,
-                            100,
-                            getImageHeight(bytes ?: byteArrayOf()) ?: 600,
-                            1
-                        )
-                        buffer.addEnd()
-                        sendToPrinter(buffer)
-                    }
-
-
-                    delay(1000)
+                    data = ByteArray(1024)
+                    val size: Int? =
+                        BluetoothActivity.connection?.readData(data, 0, data.size)
 
                     withContext(Dispatchers.Main) {
+                        mBinding.printerResponse.text = String(data, 0, size ?: 0)
                         hideProgress()
                     }
+
                 }
             }
 
