@@ -162,7 +162,7 @@ class BluetoothActivity : AppCompatActivity(), ConnectionListener {
             }
         })
 
-        mBinding.btnRefresh.performClick()
+
         if (mannual_connect.equals("", ignoreCase = true)) {
             mBinding.btnConnect.text = "Connect"
         } else {
@@ -224,6 +224,7 @@ class BluetoothActivity : AppCompatActivity(), ConnectionListener {
             if (list != null && list?.isNotEmpty() == true) {
                 adapter = ListAdapter()
                 mBinding.printerList.adapter = adapter
+                showToast("${list?.size} Devices Found!")
             } else {
                 showToast("No Printer Found!")
             }
@@ -336,7 +337,9 @@ class BluetoothActivity : AppCompatActivity(), ConnectionListener {
                 sleep(2000)
 
                 withContext(Dispatchers.Main) {
+                    connectedAddress = address
                     mBinding.layoutProgressBar.visibility = View.GONE
+                    adapter?.notifyDataSetChanged();
                 }
             }
             true

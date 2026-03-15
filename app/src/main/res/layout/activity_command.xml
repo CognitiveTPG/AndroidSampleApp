@@ -64,4 +64,14 @@
         android:text="Send"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/printer_response"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:text=""
+        android:textColor="#FFF"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 </LinearLayout>

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="#505050"
             android:gravity="center"
-            android:text="Barcode Printing"
+            android:text="QR Code Printing"
             android:textColor="#FFF"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -171,13 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7dp"
                     android:hint="Sets the number of pixels which make a module (square) in the barcode."
-                    android:numeric="decimal"
-                    android:singleLine="true" />
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="#DDD" />
+                    android:numeric="decimal" />
 
 
             </LinearLayout>
@@ -189,11 +183,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:hint="Enter barcode data" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="#DDD" />
         </LinearLayout>
     </ScrollView>
 

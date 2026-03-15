@@ -10,6 +10,7 @@ import com.example.cognitivetpgtestsdkapp.databinding.ActivityCommandBinding
 import com.example.cognitivetpgtestsdkapp.utility.showToast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
 
 class CommandActivity : AppCompatActivity() {
@@ -77,7 +78,9 @@ class CommandActivity : AppCompatActivity() {
                                 data = ByteArray(1024)
                                 val size: Int? =
                                     BluetoothActivity.connection?.readData(data, 0, data.size)
-                                showToast(String(data, 0, size ?: 0))
+                                withContext(Dispatchers.Main) {
+                                    mBinding.printerResponse.text = String(data, 0, size ?: 0)
+                                }
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()

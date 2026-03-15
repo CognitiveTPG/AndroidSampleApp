@@ -55,8 +55,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Data to print"
                 android:minHeight="70dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutPosOptions"
@@ -140,7 +140,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Select DPI Values"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -153,7 +153,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Select Alignment"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:visibility="gone"
@@ -170,7 +170,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Select Font"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -183,7 +183,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Select Rotation"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -199,8 +199,8 @@
                     android:hint="Sets the spacing between characters. Valid entries are 0 to 255"
                     android:minHeight="10dp"
                     android:numeric="integer"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
 
                 <EditText
                     android:id="@+id/text_width"
@@ -209,8 +209,8 @@
                     android:hint="Expands the font width. Valid entries are 0 to 4"
                     android:minHeight="10dp"
                     android:numeric="integer"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
 
                 <EditText
                     android:id="@+id/text_height"
@@ -219,8 +219,8 @@
                     android:hint="Expands the font height. Valid entries are 0 to 4"
                     android:minHeight="10dp"
                     android:numeric="integer"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
 
                 <EditText
                     android:id="@+id/text_x"
@@ -229,8 +229,8 @@
                     android:hint="X position of the character string"
                     android:minHeight="10dp"
                     android:numeric="integer"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
 
                 <EditText
                     android:id="@+id/text_y"
@@ -239,8 +239,8 @@
                     android:hint="Y position of the character string"
                     android:minHeight="10dp"
                     android:numeric="integer"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
 
 
             </LinearLayout>

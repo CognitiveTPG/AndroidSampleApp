@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="#505050"
             android:gravity="center"
-            android:text="Barcode Printing"
+            android:text="PDF417 Code Printing"
             android:textColor="#FFF"
             android:textSize="17sp"
             android:textStyle="bold" />

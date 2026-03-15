@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         "Raw I/O",
         "Printer Info",
         "File Print",
-        "PDF417",
+        "PDF417\nBarcode",
     )
     private val icon = intArrayOf(
         R.drawable.icon_text,
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         R.drawable.icon_raw,
         R.drawable.icon_info,
         R.drawable.icon_file,
-        R.drawable.icon_pdf417,
+        R.drawable.icon_barcode,
     )
 
     private var adapter: GridAdapter? = null

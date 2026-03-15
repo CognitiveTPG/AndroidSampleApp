@@ -50,7 +50,7 @@
             android:id="@+id/btnSelectFile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select BIN / BMP / PCX File" />
+            android:text="Select BMP/PCX File" />
 
 
         <LinearLayout
