@@ -100,7 +100,7 @@
                 android:background="@drawable/button_selector"
                 android:gravity="center"
                 android:padding="9dp"
-                android:text="Scan"
+                android:text="List Paired Devices"
                 android:textColor="#FFF" />
         </LinearLayout>
 
